@@ -24,9 +24,9 @@ if [[ -z "$HELMFILE_VERSION" ]]; then
   exit 1
 fi
 
-# Determine target OS and architecture, fallback if not set
-OS="${TARGETOS:-linux}"
-ARCH="${TARGETARCH:-amd64}"
+# Determine OS and architecture at runtime (TARGETOS/TARGETARCH are build-time only)
+OS="linux"
+ARCH="$(dpkg --print-architecture)"
 
 # Map Docker arch to Helmfile naming
 if [[ "$ARCH" == "amd64" ]]; then

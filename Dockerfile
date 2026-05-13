@@ -21,12 +21,13 @@ ENV HELM_CACHE_HOME=/root/.cache/helm
 # Update CA certificates and install required packages
 RUN apt-get update && apt-get install -y ca-certificates apt-utils curl unzip
 
-RUN if [ "$TARGETARCH" = "amd64" ]; then \
+RUN ARCH=$(dpkg --print-architecture) && \
+    if [ "$ARCH" = "amd64" ]; then \
       curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"; \
-    elif [ "$TARGETARCH" = "arm64" ]; then \
+    elif [ "$ARCH" = "arm64" ]; then \
       curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zip"; \
     else \
-      echo "Unsupported architecture: $TARGETARCH" && exit 1; \
+      echo "Unsupported architecture: $ARCH" && exit 1; \
     fi && \
     unzip awscliv2.zip && \
     ./aws/install && \
