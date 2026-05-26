@@ -45,6 +45,12 @@ inputs:
   image-tag:
     description: Docker image tag
     required: false
+  preview_name:
+    description: Sanitized preview name. Forwarded into the container as
+      $PREVIEW_NAME so helmfile.yaml.gotmpl can read it via `{{ env "PREVIEW_NAME" }}`.
+      Only used by preview-style pipelines; safe to leave empty otherwise.
+    required: false
+    default: ''
   debug:
     description: Debug mode
     default: 'false'
@@ -88,6 +94,7 @@ runs:
     NAMESPACE: ${{ inputs.namespace }}
     IMAGE_NAME: ${{ inputs.image }}
     IMAGE_TAG: ${{ inputs.image-tag }}
+    PREVIEW_NAME: ${{ inputs.preview_name }}
     OPERATION: ${{ inputs.operation }}
     GITREF_SHA: ${{ inputs.gitref-sha }}
     CLUSTER_NAME: ${{ inputs.cluster }}
