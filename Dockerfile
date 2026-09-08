@@ -1,4 +1,4 @@
-FROM public.ecr.aws/docker/library/python:3.11.4-slim-bullseye
+FROM public.ecr.aws/docker/library/python:3.11.16-slim-bookworm
 
 ARG TARGETARCH
 ARG TARGETOS
@@ -34,7 +34,7 @@ RUN ARCH=$(dpkg --print-architecture) && \
     rm -rf awscliv2.zip aws
 
 # Replace HTTP with HTTPS in sources.list
-RUN sed -i 's|http://deb.debian.org|https://deb.debian.org|g' /etc/apt/sources.list
+RUN sed -i 's|http://deb.debian.org|https://deb.debian.org|g' /etc/apt/sources.list.d/debian.sources
 
 RUN curl -1sLf 'https://dl.cloudsmith.io/public/cloudposse/packages/cfg/setup/bash.deb.sh' | bash
 

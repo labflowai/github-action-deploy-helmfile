@@ -1,13 +1,14 @@
 #!/bin/bash
 
-set -e
+set -eo pipefail
 
 if [ ! -z ${PATH_OVERRIDE+x} ]; then
 	export PATH=${PATH_OVERRIDE}:${PATH}
 fi;
 
 ## Install required versions
-apt-get update && apt-get install -y \
+apt-get update
+apt-get install -y \
 	kubectl=${KUBECTL_VERSION}-1 \
 	chamber=${CHAMBER_VERSION}-1 \
 	helm=${HELM_VERSION}-1
